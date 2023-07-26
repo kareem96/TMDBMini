@@ -23,8 +23,19 @@ class NowPlayingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNowPlayingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = "Now Playing"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupUI()
         setupObserver()
+    }
+
+    override fun onBackPressed() {
+        onBackPressedDispatcher
+    }
+    override fun supportNavigateUpTo(upIntent: Intent) {
+        super.supportNavigateUpTo(upIntent)
+        onBackPressed()
     }
 
     private fun setupUI() {

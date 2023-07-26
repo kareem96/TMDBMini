@@ -6,14 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".presentation.home.more.TopRatedAllActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:theme="@style/Theme.TMDBMini.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/toolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/Theme.TMDBMini.PopupOverlay" />
+        </FrameLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAllTopRated"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:spanCount="3"
         tools:listitem="@layout/item_horizontal" />
 

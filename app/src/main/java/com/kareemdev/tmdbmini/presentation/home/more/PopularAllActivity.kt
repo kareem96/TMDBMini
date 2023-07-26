@@ -19,12 +19,14 @@ class PopularAllActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPopularAllBinding
     private lateinit var mAdapter: MovieAdapter
     private val viewModel: HomeViewModel by viewModels()
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPopularAllBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = "Popular"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupUI()
         setupObserver()

@@ -24,6 +24,9 @@ class TopRatedAllActivity : AppCompatActivity() {
         binding = ActivityTopRatedAllBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = "Top Rated"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupUI()
         setupObserver()
     }

@@ -1,5 +1,6 @@
 package com.kareemdev.tmdbmini.presentation.detail
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,14 +26,25 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val detailMovie = intent.getParcelableExtra<Movie>(EXTRA_DATA)
         showDetailMovie(detailMovie)
+    }
+
+    override fun onBackPressed() {
+        onBackPressedDispatcher
+    }
+    override fun supportNavigateUpTo(upIntent: Intent) {
+        super.supportNavigateUpTo(upIntent)
+        onBackPressed()
     }
 
     private fun showDetailMovie(detailMovie: Movie?) {
         detailMovie?.let {
 
-            binding.content.lblName.text = detailMovie.title
+//            binding.content.lblName.text = detailMovie.title
             binding.content.tvDetailDescription.text = detailMovie.overview
             binding.content.tvRatingCount.text = detailMovie.createVoteCountToString()
             binding.content.tvPopularity.text = detailMovie.popularity.toString()

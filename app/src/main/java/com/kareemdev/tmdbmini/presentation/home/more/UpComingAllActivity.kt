@@ -23,7 +23,9 @@ class UpComingAllActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUpComingAllBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = "Up Coming"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupUI()
         setupObserver()
     }

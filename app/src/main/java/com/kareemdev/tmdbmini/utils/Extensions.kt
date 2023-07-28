@@ -2,16 +2,29 @@ package com.kareemdev.tmdbmini.utils
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.kareemdev.tmdbmini.R
+import com.kareemdev.tmdbmini.utils.Constant.getBackDropPath
+import com.kareemdev.tmdbmini.utils.Constant.getFlagPath
+import com.kareemdev.tmdbmini.utils.Constant.getPosterPath
+import com.kareemdev.tmdbmini.utils.Constant.getYouTubePath
+import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -97,5 +110,61 @@ class Extensions {
         }
 
         fun throwError(msg: String) = NetworkResult.Error(Exception(msg))
+
+        fun Context.circularProgressDrawable():Drawable{
+            return CircularProgressDrawable(this).apply {
+                strokeWidth = 7f
+                centerRadius = 60f
+                setColorSchemeColors(
+                    ContextCompat.getColor(
+                        this@circularProgressDrawable,
+                        R.color.text_color
+                    )
+                )
+                start()
+            }
+        }
+
+        fun ImageView.loadImage(url:String?, isBlur: Boolean? = false, imageTypeEnum: ImageTypeEnum){
+            val placeholder = when (imageTypeEnum) {
+                ImageTypeEnum.YOUTUBE -> R.drawable.gray_placeholder
+                ImageTypeEnum.BACKDROP -> R.drawable.gray_placeholder
+                ImageTypeEnum.POSTER -> R.drawable.gray_placeholder
+                ImageTypeEnum.LOCAL -> R.drawable.gray_placeholder
+                ImageTypeEnum.FLAG -> R.drawable.gray_placeholder
+            }
+
+            url?.let {
+                val urlString = when(imageTypeEnum){
+                    ImageTypeEnum.BACKDROP -> getBackDropPath(url)
+                    ImageTypeEnum.POSTER -> getPosterPath(url)
+                    ImageTypeEnum.YOUTUBE -> getYouTubePath(url)
+//                    ImageTypeEnum.CREDIT -> getPosterPath(url)
+                    ImageTypeEnum.LOCAL -> url
+                    ImageTypeEnum.FLAG -> getFlagPath(url)
+                }
+                if(isBlur == true){
+                    Glide.with(this.context)
+                        .load(urlString)
+                        .apply(RequestOptions())
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .apply(RequestOptions.bitmapTransform(BlurTransformation(10, 1)))
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(this.context.circularProgressDrawable())
+                        .error(placeholder)
+                        .into(this)
+                }else{
+                    Glide.with(this.context)
+                        .load(urlString)
+                        .apply(RequestOptions())
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(this.context.circularProgressDrawable())
+                        .error(placeholder)
+                        .into(this)
+                }
+            } ?: run{
+                this.setImageResource(placeholder)
+            }
+        }
     }
 }

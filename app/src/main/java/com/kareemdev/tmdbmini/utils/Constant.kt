@@ -7,6 +7,9 @@ object Constant {
     const val YOUTUBE_API_KEY = "AIzaSyC5qfmDhPMZello7BoxGfz-UqoL8KjJpBc"
 
     const val BASE_URL = "https://api.themoviedb.org/3/"
+    private const val BASE_URL_IMAGE = "https://image.tmdb.org/t/p/original"
+    private const val BASE_URL_IMAGE_YOUTUBE = "https://img.youtube.com/vi/"
+    private const val SIZE_IMG_YOUTUBE = "/hq720.jpg"
 
     // on TextView "Sign Up" open browser with this link
     const val URL_SIGN_UP = "https://www.themoviedb.org/signup"
@@ -97,4 +100,19 @@ object Constant {
     const val VIDEO_TYPE_TEASER = "Teaser"
     const val VIDEO_TYPE_TRAILER = "Trailer"
     const val VIDEO_SITE_YOUTUBE = "YouTube"
+
+    fun getPosterPath(posterPath:String?): String{
+        return BASE_URL_IMAGE + posterPath
+    }
+    fun getBackDropPath(backDropPath:String?): String{
+        return BASE_URL_IMAGE + backDropPath
+    }
+    fun getYouTubePath(youTubePath:String?): String{
+        return BASE_URL_IMAGE_YOUTUBE + youTubePath + SIZE_IMG_YOUTUBE
+    }
+
+    fun getFlagPath(iso6391:String): String{
+        return "https://www.unknown.nu/flags/images/$iso6391-100"
+
+    }
 }

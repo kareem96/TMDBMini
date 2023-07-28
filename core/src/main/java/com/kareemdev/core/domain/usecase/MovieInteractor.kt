@@ -3,6 +3,7 @@ package com.kareemdev.core.domain.usecase
 import com.kareemdev.core.data.Resource
 import com.kareemdev.core.domain.model.Movie
 import com.kareemdev.core.domain.model.Review
+import com.kareemdev.core.domain.model.Trailers
 import com.kareemdev.core.domain.repository.IMovieRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -26,6 +27,10 @@ class MovieInteractor @Inject constructor(private val movieRepository: IMovieRep
 
     override fun getReview(movieId: Int): Flow<Resource<List<Review>>> {
         return movieRepository.getReview(movieId)
+    }
+
+    override fun getTrailersMovie(movieId: Int): Flow<Resource<List<Trailers>>> {
+        return movieRepository.getTrailersMovie(movieId)
     }
 
     override fun getFavoriteMovie(): Flow<List<Movie>> {

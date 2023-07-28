@@ -15,4 +15,38 @@
         android:name="com.kareemdev.tmdbmini.presentation.favorite.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/trailersFragment"
+        android:name="com.kareemdev.tmdbmini.presentation.detail.trailers.TrailersFragment"
+        android:label="fragment_trailers"
+        tools:layout="@layout/fragment_trailers" >
+        <argument
+            android:name="id"
+            app:argType="integer"/>
+        <action
+            android:id="@+id/action_trailersFragment_to_videoPlayerFragment"
+            app:destination="@id/videoPlayerFragment" />
+        <action
+            android:id="@+id/action_trailersFragment_to_blankFragment"
+            app:destination="@id/blankFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/videoPlayerFragment"
+        android:name="com.kareemdev.tmdbmini.presentation.detail.video.VideoPlayerFragment"
+        android:label="fragment_video_player"
+        tools:layout="@layout/fragment_video_player" >
+        <argument
+            android:name="videoId"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0"/>
+    </fragment>
+    <fragment
+        android:id="@+id/blankFragment"
+        android:name="com.kareemdev.tmdbmini.presentation.detail.video.BlankFragment"
+        android:label="fragment_blank"
+        tools:layout="@layout/fragment_blank" />
 </navigation>

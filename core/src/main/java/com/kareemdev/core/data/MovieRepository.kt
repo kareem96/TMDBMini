@@ -5,8 +5,10 @@ import com.kareemdev.core.data.source.remote.RemoteDataSource
 import com.kareemdev.core.data.source.remote.network.ApiResponse
 import com.kareemdev.core.data.source.remote.response.MovieResponse
 import com.kareemdev.core.data.source.remote.response.ReviewResponse
+import com.kareemdev.core.data.source.remote.response.TrailersResponse
 import com.kareemdev.core.domain.model.Movie
 import com.kareemdev.core.domain.model.Review
+import com.kareemdev.core.domain.model.Trailers
 import com.kareemdev.core.domain.repository.IMovieRepository
 import com.kareemdev.core.utils.AppExecutors
 import com.kareemdev.core.utils.DataMapper
@@ -147,6 +149,26 @@ class MovieRepository @Inject constructor(
 
             override suspend fun createCall(): Flow<ApiResponse<List<ReviewResponse>>> {
                 return remoteDataSource.getReview(movieId)
+            }
+
+        }.asFLow()
+    }
+
+    override fun getTrailersMovie(movieId: Int): Flow<Resource<List<Trailers>>> {
+        return object : RemoteSource<List<Trailers>, List<TrailersResponse>>() {
+            override fun emptyResult(): Flow<List<Trailers>> {
+                return flow { emit(emptyList()) }
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<List<TrailersResponse>>> {
+                return remoteDataSource.getTrailerMovie(movieId)
+            }
+
+            override fun convertCallResult(data: List<TrailersResponse>): Flow<List<Trailers>> {
+                val result = data.map {
+                    DataMapper.mapTrailerResponseToDomain(it)
+                }
+                return flow { emit(result) }
             }
 
         }.asFLow()

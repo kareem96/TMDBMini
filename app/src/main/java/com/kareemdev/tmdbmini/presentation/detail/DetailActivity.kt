@@ -7,7 +7,10 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.kareemdev.core.data.Resource
 import com.kareemdev.core.data.source.remote.response.MovieResponse
 import com.kareemdev.core.domain.model.Movie
@@ -19,6 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
+    private lateinit var viewPager: ViewPager2
+    private lateinit var tabLayout: TabLayout
     private val detailViewModel: DetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +32,20 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        viewPager = binding.content.viewPager
+        val adapter = ViewPagerAdapter(this)
+        val tabLayout : TabLayout = binding.content.tabLyt
+        viewPager.adapter = adapter
+        val tabsArray = arrayOf(
+            "Trailers",
+            "Review",
+        )
+        TabLayoutMediator(tabLayout, viewPager){tab, position ->
+            tab.text = tabsArray[position]
+        }.attach()
+
         val detailMovie = intent.getParcelableExtra<Movie>(EXTRA_DATA)
         showDetailMovie(detailMovie)
     }
@@ -64,13 +81,13 @@ class DetailActivity : AppCompatActivity() {
         }
 
         val mAdapter = ReviewAdapter()
-        with(binding.content.rvReview){
+        /*with(binding.content.rvReview){
             layoutManager = LinearLayoutManager(
                 context, LinearLayoutManager.HORIZONTAL, false
             )
             adapter = mAdapter
             setHasFixedSize(true)
-        }
+        }*/
         if (detailMovie != null) {
             detailViewModel.getReview(detailMovie.movieId).observe(this){ review ->
                 if (review != null){

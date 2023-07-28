@@ -3,8 +3,10 @@ package com.kareemdev.core.utils
 import com.kareemdev.core.data.source.local.entity.MovieEntity
 import com.kareemdev.core.data.source.remote.response.MovieResponse
 import com.kareemdev.core.data.source.remote.response.ReviewResponse
+import com.kareemdev.core.data.source.remote.response.TrailersResponse
 import com.kareemdev.core.domain.model.Movie
 import com.kareemdev.core.domain.model.Review
+import com.kareemdev.core.domain.model.Trailers
 import com.kareemdev.core.utils.Constants.NOW_PLAYING_TYPE
 import com.kareemdev.core.utils.Constants.POPULAR_TYPE
 import com.kareemdev.core.utils.Constants.TOP_RATED_TYPE
@@ -162,11 +164,30 @@ object DataMapper {
     fun mapReviewResponseToDomain(
         input: ReviewResponse,
     ) = Review(
-        author=  input.author,
-        content= input.content,
-        createdAt= input.createdAt,
-        updatedAt= input.updatedAt,
-        url= input.url,
-        id= input.id,
+        author = input.author,
+        content = input.content,
+        createdAt = input.createdAt,
+        updatedAt = input.updatedAt,
+        url = input.url,
+        id = input.id,
     )
+
+    fun mapTrailerResponseToDomain(input: TrailersResponse) =
+        Trailers(
+            id = input.id,
+            key = input.key,
+            name = input.name,
+            published = input.publishedAt,
+        )
+
+
+
+    fun List<TrailersResponse>.toTrailers() = map {
+        Trailers(
+            id = it.id,
+            key = it.key,
+            name = it.name,
+            published = it.publishedAt,
+        )
+    }
 }

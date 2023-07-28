@@ -3,6 +3,7 @@ package com.kareemdev.core.data.source.remote.network
 import com.kareemdev.core.BuildConfig
 import com.kareemdev.core.data.source.remote.response.ListMovieResponse
 import com.kareemdev.core.data.source.remote.response.ListReviewResponse
+import com.kareemdev.core.data.source.remote.response.ListTrailerMovie
 import com.kareemdev.core.utils.Constants.URL_NOW_PLAYING
 import com.kareemdev.core.utils.Constants.URL_POPULAR
 import com.kareemdev.core.utils.Constants.URL_TOP_RATED
@@ -48,4 +49,9 @@ interface ApiService {
         @Query("language") language:String,
         @Query("page") page:Int
     ):ListReviewResponse
+    @GET("movie/{movieId}/videos")
+    suspend fun getTrailersMovie(
+        @Path("movieId") movieId:Int,
+        @Query("api_key") apiKey:String,
+    ):ListTrailerMovie
 }

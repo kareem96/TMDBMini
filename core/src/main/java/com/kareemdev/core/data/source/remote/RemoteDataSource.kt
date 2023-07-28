@@ -8,6 +8,7 @@ import com.kareemdev.core.data.source.remote.response.MovieResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -85,4 +86,19 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             emit(ApiResponse.Error(e.toString()))
         }
     }.flowOn(Dispatchers.IO)
+
+    suspend fun getTrailerMovie(movieId:Int) = flow {
+        try {
+            val response = apiService.getTrailersMovie( movieId = movieId, API_KEY)
+            val dataArray = response.results
+            if (dataArray.isNotEmpty()) {
+                emit(ApiResponse.Success(response.results))
+            } else {
+                emit(ApiResponse.Empty)
+            }
+        } catch (e: Exception) {
+            emit(ApiResponse.Error(e.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
 }

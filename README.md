@@ -10,6 +10,9 @@
 - [ViewPager2](https://developer.android.com/jetpack/androidx/releases/viewpager2)
 - [TheMovieDb(Tmdb) API](https://developers.themoviedb.org/3)
 
+- <img src="https://github.com/kareem96/TMDBMini/blob/master/screenshots/screen1.png" width="128"/>
+
+
 ![](https://github.com/kareem96/TMDBMini/blob/master/screenshots/screen1.png)
 ![](https://github.com/kareem96/TMDBMini/blob/master/screenshots/screen2.png)
 ![](https://github.com/kareem96/TMDBMini/blob/master/screenshots/screen3.png)

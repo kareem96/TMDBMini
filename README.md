@@ -18,11 +18,3 @@
 - <img src="https://github.com/kareem96/TMDBMini/blob/master/screenshots/screen6.png" width="128"/>
 
 
-![](https://github.com/kareem96/TMDBMini/blob/master/screenshots/screen1.png)
-![](https://github.com/kareem96/TMDBMini/blob/master/screenshots/screen2.png)
-![](https://github.com/kareem96/TMDBMini/blob/master/screenshots/screen3.png)
-![](https://github.com/kareem96/TMDBMini/blob/master/screenshots/screen4.png)
-![](https://github.com/kareem96/TMDBMini/blob/master/screenshots/screen5.png)
-![](https://github.com/kareem96/TMDBMini/blob/master/screenshots/screen6.png)
-
-
